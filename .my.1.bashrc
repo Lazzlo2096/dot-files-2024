@@ -10,8 +10,8 @@ function PreCommand() {
 
   # Do stuff.
   start_time=$(date +%s)
-  
-  
+
+
   #echo "Running PreCommand"
 }
 trap "PreCommand" DEBUG
@@ -48,7 +48,7 @@ function PostCommand() {
 
   fi
 
-  
+
   #echo "Running PostCommand"
 }
 PROMPT_COMMAND="PostCommand"
