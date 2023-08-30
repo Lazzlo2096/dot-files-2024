@@ -1,1 +1,1 @@
-echo "source bashrc_source.sh" >> ~/.bashrc
+echo "source ~/dot-files-2024/bashrc_source.sh" >> ~/.bashrc
