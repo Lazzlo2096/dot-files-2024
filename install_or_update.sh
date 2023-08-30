@@ -1,0 +1,1 @@
+echo "source bashrc_source.sh" >> ~/.bashrc
