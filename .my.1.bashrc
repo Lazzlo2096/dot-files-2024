@@ -31,11 +31,19 @@ function PostCommand() {
   # Do stuff.
   end_time=$(date +%s)
   duration=$((end_time - start_time))  
-  if [[ $duration -gt 30 ]]; then
-    play -q -n synth 0.1 sin 400 || echo "Sound failed to play."
-    echo "Command started at: $(date -d@$start_time)"
-    echo "Command finished at: $(date -d@$end_time)"
-    echo "Command duration: $duration seconds"
+  if [[ $duration -gt 60 ]]; then
+    #play -q -n synth 0.1 sin 400 || echo "Sound failed to play."
+    #echo "Command started at: $(date -d@$start_time)"
+    #echo "Command finished at: $(date -d@$end_time)"
+    #echo "Command duration: $duration seconds"
+
+    seconds=$(($duration%60))
+    minutes=$(($duration/60))
+    formatted_time=$(printf "%02d:%02d" $minutes $seconds)
+
+    echo " > started at $(date -u -d@$start_time +%H:%M:%S) [$formatted_time ($duration)] "
+    #echo "Command finished at: $(date -d@$end_time)"
+    #echo "Command duration: $duration seconds"
   fi
 
   
