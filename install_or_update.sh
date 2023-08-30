@@ -4,6 +4,7 @@
 if [ -d ~/dot-files-2024 ]; then
 
 	# update
+	echo "updating..."
 	cd ~/dot-files-2024
 	git pull
 
@@ -12,6 +13,7 @@ if [ -d ~/dot-files-2024 ]; then
 else
 
 	# first run
+	echo "installing..."
 	cd ~
 	git clone https://github.com/Lazzlo2096/dot-files-2024.git
 	cd ~/dot-files-2024
