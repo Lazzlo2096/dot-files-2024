@@ -30,7 +30,12 @@ function PostCommand() {
 
   # Do stuff.
   end_time=$(date +%s)
-  duration=$((end_time - start_time))  
+  duration=$((end_time - start_time))
+
+  seconds=$(($duration%60))
+  minutes=$(($duration/60))
+  formatted_time=$(printf "%02d:%02d" $minutes $seconds)
+
   if [[ $duration -gt 60 ]]; then
 
     #play -q -n synth 0.1 sin 400 || echo "Sound failed to play."
@@ -39,16 +44,17 @@ function PostCommand() {
     #echo "Command finished at: $(date -d@$end_time)"
     #echo "Command duration: $duration seconds"
 
-    seconds=$(($duration%60))
-    minutes=$(($duration/60))
-    formatted_time=$(printf "%02d:%02d" $minutes $seconds)
-
     #echo -e "\t > started at $(date -d@$start_time +%H:%M:%S) [+$formatted_time ($duration)] "
     echo -ne "[+$formatted_time]"
 
   fi
-
+  
+  command=$(fc -ln -0)
+  echo -ne "[$(date -d@$start_time +%H:%M:%S) +$formatted_time]\t$command\n" >> ~/.my_history
 
   #echo "Running PostCommand"
 }
 PROMPT_COMMAND="PostCommand"
+
+alias historymy=" tail ~/.my_history"
+alias historymyfull=" cat ~/.my_history"
