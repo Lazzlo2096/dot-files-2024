@@ -7,7 +7,8 @@ parse_git_branch() {
 
 # my tut pereorpedelyaem chto bylo v .bachrc
 #if [ "$color_prompt" = yes ]; then
-if [ ! -z "$WSL_DISTRO_NAME" ]; then         # true # чтобы работало с цветами в WSL
+#if [ ! -z "$WSL_DISTRO_NAME" ]; then         # чтобы работало с цветами в WSL
+if [ true ]; then
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ ' # without branch
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\n\[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\$ ' # with branch, on new line
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\n\$ ' # with branch, on prev line
