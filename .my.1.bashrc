@@ -14,7 +14,8 @@ export HISTIGNORE='ls:ps:history*'
 #PROMPT_COMMAND='history -a'
 # --------------------------------
 
-alias historymy=" tail -n $(( $(tput lines) - 4 )) ~/commands.log"
+alias historymy="tail -n $(( $(tput lines) - 4 )) ~/commands.log"
+alias historymyfull="vim +$ ~/commands.log" # vim -c 'norm G' файл
 #alias historymy=" tail ~/.my_history"
 #alias historymyfull=" cat ~/.my_history"
 
@@ -44,7 +45,7 @@ save_command() {
     timestamp=$(date -d@$timestamp +"%Y-%m-%d %H:%M:%S")
     #echo lol=$timestamp
 
-    echo "$timestamp | $terminal | $duration | '$path' | '$command'" >> ~/commands.log
+    echo "$timestamp | $terminal | '$path' | $duration | '$command'" >> ~/commands.log
 }
 
 # todo: hours or more minuts ?
@@ -108,6 +109,8 @@ function PostCommand() {
 
 
   #echo "Running PostCommand"
+
+  history -a
 }
 PROMPT_COMMAND="PostCommand"
 
