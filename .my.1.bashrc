@@ -2,6 +2,23 @@
 
 # to reload: source ~/dot-files-2024/.my.1.bashrc
 
+# --------------------------------
+export HISTCONTROL=ignorespace:ignoredups
+
+#echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
+export HISTTIMEFORMAT="%d/%m/%y %T "
+export HISTTIMEFORMAT='%d.%m.%Y %H:%M:%S: '
+
+export HISTIGNORE='ls:ps:history*'
+
+#PROMPT_COMMAND='history -a'
+# --------------------------------
+
+alias historymy=" tail -n $(( $(tput lines) - 4 )) ~/commands.log"
+#alias historymy=" tail ~/.my_history"
+#alias historymyfull=" cat ~/.my_history"
+
+#$(tput cols)
 
 save_command_0() {
 
@@ -27,7 +44,7 @@ save_command() {
     timestamp=$(date -d@$timestamp +"%Y-%m-%d %H:%M:%S")
     #echo lol=$timestamp
 
-    echo "$timestamp | $duration | $terminal | '$path' | '$command'" >> ~/commands.log
+    echo "$timestamp | $terminal | $duration | '$path' | '$command'" >> ~/commands.log
 }
 
 # todo: hours or more minuts ?
@@ -81,7 +98,8 @@ function PostCommand() {
 
   fi
   
-  command=$(fc -ln -0)
+  #command=$(fc -ln -0)
+  command=$(fc -ln -0 | sed 's/^[[:space:]]*//') # убирает этот ненужный тамб в начале
 
   # минус того, что оно запишеться только после окончания, хз
   save_command_0 "$command" "$start_time" "$formatted_delta_time"
@@ -93,5 +111,3 @@ function PostCommand() {
 }
 PROMPT_COMMAND="PostCommand"
 
-alias historymy=" tail ~/.my_history"
-alias historymyfull=" cat ~/.my_history"

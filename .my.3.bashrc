@@ -96,14 +96,48 @@ fi
 
 # . "$HOME/.cargo/env" # auto added by cargo
 
+# но можно же просто заюзать переменную...лол...
+# хотя, когда быстро хочеться сделать mkdir cd
 s () { # s combinator
    
-   #echo "Parameter #1 is $1"
-   #echo "Parameter #2 is $2"
-   #echo "Parameter #2 is $2"
+   echo "Parameter #1 is $1"
+   echo "Parameter #2 is $2"
+   echo "Parameter #2 is $2"
    
-   echo "$1 $3; $2 $3"
+   echo "$1 $3 && $2 $3"
    #eval "$1 $3 ; $2 $3"
+}
+
+alias ','='s'
+
+alias 'mkcd'='mkdir "@" && cd "@"'
+alias 'mkcd2'='echo "@" && echo "@"'
+
+mkdircd () {
+  #echo "Parameter #1 is $1"
+  #echo "Parameter #2 is $2"
+  echo "Parameter #a is $@"
+
+  # Сначала определите количество аргументов в списке
+  num_args=$#
+  echo $num_args
+  tmp2=$((num_args-1))
+  echo $tmp2
+
+
+  # https://stackoverflow.com/questions/1335815/how-to-slice-an-array-in-bash
+  
+  ARGS=( "$@" )
+  ARGS_AFTER_FIRST=( "${ARGS[@]:1:2}" )
+
+
+
+  # Используйте срез, чтобы взять все элементы, кроме последнего
+  all_but_last_args=("${@:2:4}")
+  echo "Parameter #all_but_last_args is $ARGS_AFTER_FIRST"
+
+  #mkdir $1
+  #cd $1
 }
 
 # пример использования 
