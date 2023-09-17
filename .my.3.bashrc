@@ -16,6 +16,8 @@ parse_git_branch() {
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 
+alias gitk="gitk --all &"
+
 #----------------------
 
 MAGENTA="\[\033[0;35m\]"
