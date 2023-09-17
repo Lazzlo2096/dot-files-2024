@@ -3,12 +3,23 @@
 # to reload: source ~/dot-files-2024/.my.1.bashrc
 
 
+save_command_0() {
+
+    command="$1"
+    start_time="$2"
+    formatted_delta_time="$3"
+
+    timestamp_=$(date -d@$start_time +%H:%M:%S)
+
+    echo -ne "[$timestamp_ +$formatted_delta_time]\t$command\n" >> ~/.my_history
+}
 
 save_command() {
 
     command="$1"
     timestamp="$2"
     duration="$3"
+
     path=$(pwd) #"$4"
     terminal=$(tty) #"$5" 
 
@@ -16,7 +27,7 @@ save_command() {
     timestamp=$(date -d@$timestamp +"%Y-%m-%d %H:%M:%S")
     #echo lol=$timestamp
 
-    echo "$timestamp | $command | $duration | $path | $terminal" >> ~/commands.log
+    echo "$timestamp | $duration | $terminal | '$path' | '$command'" >> ~/commands.log
 }
 
 # todo: hours or more minuts ?
@@ -55,7 +66,7 @@ function PostCommand() {
 
   seconds=$(($duration%60))
   minutes=$(($duration/60))
-  formatted_time=$(printf "%02d:%02d" $minutes $seconds)
+  formatted_delta_time=$(printf "%02d:%02d" $minutes $seconds)
 
   if [[ $duration -gt 60 ]]; then
 
@@ -65,15 +76,18 @@ function PostCommand() {
     #echo "Command finished at: $(date -d@$end_time)"
     #echo "Command duration: $duration seconds"
 
-    #echo -e "\t > started at $(date -d@$start_time +%H:%M:%S) [+$formatted_time ($duration)] "
-    echo -ne "[+$formatted_time]"
+    #echo -e "\t > started at $(date -d@$start_time +%H:%M:%S) [+$formatted_delta_time ($duration)] "
+    echo -ne "[+$formatted_delta_time]"
 
   fi
   
   command=$(fc -ln -0)
-  echo -ne "[$(date -d@$start_time +%H:%M:%S) +$formatted_time]\t$command\n" >> ~/.my_history
 
-  save_command "$command" "$start_time" "$duration"
+  # минус того, что оно запишеться только после окончания, хз
+  save_command_0 "$command" "$start_time" "$formatted_delta_time"
+  
+  save_command   "$command" "$start_time" "$duration"
+
 
   #echo "Running PostCommand"
 }
